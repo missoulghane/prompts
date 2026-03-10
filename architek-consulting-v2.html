@@ -1,0 +1,1418 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Architek Consulting — Shaping the Future of Enterprise Technology</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,200;0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink:        #1a1020;
+    --paper:      #EDE6F1;
+    --plum:       #734B81;
+    --plum-dark:  #5A3966;
+    --plum-light: #9A79A6;
+    --lavender:   #EDE6F1;
+    --mid:        #7a6b82;
+    --line:       #d8cfe0;
+    --white:      #ffffff;
+    --surface:    #f7f3fa;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; font-size: 16px; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    overflow-x: hidden;
+  }
+
+  /* ─── LANG BAR ─── */
+  .lang-bar {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 1000;
+    background: var(--plum-dark);
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 0 3rem;
+    height: 36px;
+  }
+  .lang-toggle { display: flex; gap: 1rem; align-items: center; }
+  .lang-btn {
+    background: none; border: none;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.68rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+    cursor: pointer;
+    padding: 2px 6px;
+    transition: color 0.2s;
+  }
+  .lang-btn.active { color: #fff; border-bottom: 1px solid rgba(255,255,255,0.6); }
+  .lang-btn:hover:not(.active) { color: rgba(255,255,255,0.8); }
+  .lang-sep { color: rgba(255,255,255,0.2); font-size: 0.7rem; }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed;
+    top: 36px; left: 0; right: 0;
+    z-index: 999;
+    background: rgba(255,255,255,0.97);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 3rem;
+    height: 72px;
+    transition: box-shadow 0.3s;
+  }
+  nav.scrolled { box-shadow: 0 4px 30px rgba(115,75,129,0.08); }
+
+  .nav-logo { text-decoration: none; display: flex; flex-direction: column; line-height: 1; }
+  .nav-logo-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 600;
+    font-size: 1.5rem;
+    color: var(--ink);
+    letter-spacing: 0.04em;
+  }
+  .nav-logo-name span { color: var(--plum); }
+  .nav-logo-tag {
+    font-size: 0.58rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--plum-light);
+    margin-top: 3px;
+  }
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; align-items: center; }
+  .nav-links a {
+    text-decoration: none;
+    font-size: 0.76rem;
+    font-weight: 400;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--mid);
+    transition: color 0.2s;
+    position: relative;
+  }
+  .nav-links a::after {
+    content: ''; position: absolute;
+    bottom: -3px; left: 0;
+    width: 0; height: 1px;
+    background: var(--plum);
+    transition: width 0.3s;
+  }
+  .nav-links a:hover { color: var(--plum); }
+  .nav-links a:hover::after { width: 100%; }
+  .nav-cta {
+    color: var(--white) !important;
+    background: var(--plum);
+    padding: 0.55rem 1.4rem !important;
+    border-radius: 2px;
+    transition: background 0.2s !important;
+  }
+  .nav-cta::after { display: none !important; }
+  .nav-cta:hover { background: var(--plum-dark) !important; color: var(--white) !important; }
+
+  /* ─── HERO ─── */
+  .hero {
+    min-height: 100vh;
+    padding-top: 108px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-left {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 6rem 4rem 6rem 3rem;
+    position: relative;
+    z-index: 2;
+  }
+  .hero-eyebrow {
+    font-size: 0.66rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--plum);
+    font-weight: 500;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+  .hero-eyebrow::before {
+    content: '';
+    display: block; width: 28px; height: 1px;
+    background: var(--plum);
+  }
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(2.8rem, 4.5vw, 4.8rem);
+    line-height: 1.06;
+    color: var(--ink);
+    margin-bottom: 2rem;
+  }
+  .hero-title em { font-style: italic; color: var(--plum); }
+  .hero-sub {
+    font-size: 0.98rem;
+    font-weight: 300;
+    color: var(--mid);
+    line-height: 1.75;
+    max-width: 450px;
+    margin-bottom: 3rem;
+  }
+  .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.73rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    font-weight: 500;
+    background: var(--plum);
+    color: var(--white);
+    padding: 0.9rem 2rem;
+    text-decoration: none;
+    border: 1px solid var(--plum);
+    border-radius: 2px;
+    transition: background 0.25s, border-color 0.25s;
+  }
+  .btn-primary:hover { background: var(--plum-dark); border-color: var(--plum-dark); }
+  .btn-secondary {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.73rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    font-weight: 500;
+    background: transparent;
+    color: var(--plum);
+    padding: 0.9rem 2rem;
+    text-decoration: none;
+    border: 1px solid var(--plum-light);
+    border-radius: 2px;
+    transition: border-color 0.25s, background 0.25s, color 0.25s;
+  }
+  .btn-secondary:hover { border-color: var(--plum); background: rgba(115,75,129,0.05); }
+
+  .hero-stats {
+    display: flex; gap: 2.5rem;
+    margin-top: 4rem;
+    padding-top: 2.5rem;
+    border-top: 1px solid var(--line);
+  }
+  .stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.2rem; font-weight: 500;
+    color: var(--plum); line-height: 1;
+  }
+  .stat-label {
+    font-size: 0.63rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--mid);
+    margin-top: 0.3rem;
+  }
+
+  /* hero right panel */
+  .hero-right {
+    position: relative;
+    background: var(--plum-dark);
+    overflow: hidden;
+  }
+  .hero-grid-bg {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+    background-size: 48px 48px;
+    animation: gridShift 22s linear infinite;
+  }
+  @keyframes gridShift {
+    from { transform: translate(0,0); }
+    to   { transform: translate(48px,48px); }
+  }
+  .hero-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(60px);
+    opacity: 0.35;
+  }
+  .hero-orb-1 {
+    width: 320px; height: 320px;
+    background: var(--plum-light);
+    top: -80px; right: -80px;
+  }
+  .hero-orb-2 {
+    width: 200px; height: 200px;
+    background: #9a79a6;
+    bottom: 60px; left: 30px;
+  }
+  .hero-diagram {
+    position: relative; z-index: 2;
+    padding: 3rem;
+    width: 100%; max-width: 480px;
+    margin: auto;
+    display: flex; flex-direction: column;
+    justify-content: center; height: 100%;
+  }
+  .diagram-node {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-left: 3px solid rgba(154,121,166,0.6);
+    padding: 1.2rem 1.5rem;
+    margin-bottom: 1rem;
+    opacity: 0;
+    transform: translateX(30px);
+    animation: slideIn 0.7s ease forwards;
+  }
+  .diagram-node:nth-child(1) { animation-delay: 0.3s; }
+  .diagram-node:nth-child(2) { animation-delay: 0.6s; border-left-color: rgba(255,255,255,0.4); }
+  .diagram-node:nth-child(3) { animation-delay: 0.9s; }
+  @keyframes slideIn {
+    to { opacity: 1; transform: translateX(0); }
+  }
+  .node-tag {
+    font-size: 0.58rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--plum-light);
+    margin-bottom: 0.4rem;
+  }
+  .node-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.15rem;
+    color: rgba(255,255,255,0.9);
+    font-weight: 400;
+    margin-bottom: 0.5rem;
+  }
+  .node-chips {
+    display: flex; flex-wrap: wrap; gap: 0.4rem;
+  }
+  .node-chip {
+    font-size: 0.58rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.45);
+    border: 1px solid rgba(255,255,255,0.12);
+    padding: 0.15rem 0.45rem;
+    border-radius: 1px;
+  }
+  .hero-quote {
+    position: relative; z-index: 2;
+    margin: 0 3rem 3rem;
+    padding: 1.2rem 1.5rem;
+    border-top: 1px solid rgba(255,255,255,0.1);
+  }
+  .hero-quote-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    font-style: italic;
+    color: rgba(255,255,255,0.45);
+    line-height: 1.5;
+  }
+
+  /* ─── SECTION COMMON ─── */
+  section { padding: 6rem 3rem; }
+  .section-label {
+    font-size: 0.63rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--plum);
+    font-weight: 500;
+    margin-bottom: 0.8rem;
+    display: flex; align-items: center; gap: 0.7rem;
+  }
+  .section-label::before {
+    content: '';
+    display: block; width: 20px; height: 1px;
+    background: var(--plum);
+  }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(2rem, 3.2vw, 2.8rem);
+    line-height: 1.1;
+    color: var(--ink);
+    margin-bottom: 1rem;
+  }
+  .section-title em { font-style: italic; color: var(--plum); }
+  .section-intro {
+    font-size: 0.93rem;
+    font-weight: 300;
+    color: var(--mid);
+    line-height: 1.75;
+    max-width: 560px;
+  }
+
+  /* ─── EXPERTISE ─── */
+  #expertise { background: var(--white); }
+  .expertise-header {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    margin-bottom: 4rem;
+    align-items: end;
+  }
+  .expertise-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+  .expertise-card {
+    padding: 0;
+    border: 1px solid var(--line);
+    background: var(--white);
+    overflow: hidden;
+    transition: border-color 0.3s, box-shadow 0.3s, transform 0.3s;
+    cursor: default;
+  }
+  .expertise-card:hover {
+    border-color: var(--plum-light);
+    box-shadow: 0 12px 40px rgba(115,75,129,0.1);
+    transform: translateY(-4px);
+  }
+  .card-header {
+    background: var(--lavender);
+    padding: 2rem 2rem 1.5rem;
+    border-bottom: 2px solid transparent;
+    transition: border-color 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+  .expertise-card:hover .card-header { border-color: var(--plum); }
+  .card-header::after {
+    content: '';
+    position: absolute;
+    top: -30px; right: -30px;
+    width: 100px; height: 100px;
+    border-radius: 50%;
+    background: rgba(115,75,129,0.06);
+    transition: transform 0.4s;
+  }
+  .expertise-card:hover .card-header::after { transform: scale(2); }
+  .card-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 3.5rem;
+    font-weight: 300;
+    color: rgba(115,75,129,0.15);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+    transition: color 0.3s;
+  }
+  .expertise-card:hover .card-number { color: rgba(115,75,129,0.3); }
+  .card-icon {
+    width: 44px; height: 44px;
+    background: var(--plum);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    border-radius: 2px;
+  }
+  .card-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.35rem;
+    font-weight: 500;
+    color: var(--ink);
+    line-height: 1.2;
+  }
+  .card-body { padding: 1.5rem 2rem 2rem; }
+  .card-text {
+    font-size: 0.82rem;
+    font-weight: 300;
+    color: var(--mid);
+    line-height: 1.7;
+    margin-bottom: 1.2rem;
+  }
+  .card-services {
+    display: flex; flex-direction: column; gap: 0.4rem;
+    margin-bottom: 1.4rem;
+  }
+  .service-line {
+    display: flex; align-items: center; gap: 0.6rem;
+    font-size: 0.78rem;
+    color: var(--ink);
+    font-weight: 300;
+  }
+  .service-line::before {
+    content: '';
+    width: 4px; height: 4px;
+    border-radius: 50%;
+    background: var(--plum-light);
+    flex-shrink: 0;
+  }
+  .card-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+  .tag {
+    font-size: 0.59rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--plum);
+    border: 1px solid rgba(115,75,129,0.25);
+    padding: 0.2rem 0.55rem;
+    border-radius: 1px;
+    background: rgba(115,75,129,0.04);
+  }
+
+  /* ─── APPROACH ─── */
+  #approach {
+    background: var(--plum-dark);
+    color: var(--white);
+    position: relative;
+    overflow: hidden;
+  }
+  #approach::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+    background-size: 56px 56px;
+  }
+  .approach-inner { position: relative; z-index: 1; }
+  #approach .section-label { color: rgba(154,121,166,1); }
+  #approach .section-label::before { background: var(--plum-light); }
+  #approach .section-title { color: var(--white); }
+  #approach .section-intro { color: rgba(255,255,255,0.5); }
+  .approach-header {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    margin-bottom: 4rem;
+    align-items: end;
+  }
+  .steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: rgba(255,255,255,0.06); }
+  .step {
+    background: var(--plum-dark);
+    padding: 2.5rem 2rem;
+    border-top: 2px solid transparent;
+    transition: border-color 0.3s, background 0.3s;
+  }
+  .step:hover { border-color: var(--plum-light); background: rgba(115,75,129,0.2); }
+  .step-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 4rem; font-weight: 300;
+    color: rgba(255,255,255,0.06);
+    line-height: 1; margin-bottom: 1rem;
+  }
+  .step-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem; color: var(--white); margin-bottom: 0.7rem;
+  }
+  .step-text { font-size: 0.78rem; font-weight: 300; color: rgba(255,255,255,0.42); line-height: 1.6; }
+
+  /* ─── SECTORS ─── */
+  #sectors { background: var(--paper); }
+  .sectors-header {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem; margin-bottom: 4rem; align-items: end;
+  }
+  .sectors-list { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+  .sector-item {
+    display: flex; align-items: flex-start; gap: 1rem;
+    padding: 1.4rem;
+    border: 1px solid var(--line);
+    background: var(--white);
+    transition: border-color 0.3s, box-shadow 0.3s;
+  }
+  .sector-item:hover { border-color: var(--plum-light); box-shadow: 0 4px 20px rgba(115,75,129,0.07); }
+  .sector-icon {
+    width: 38px; height: 38px; flex-shrink: 0;
+    background: rgba(115,75,129,0.1);
+    border: 1px solid rgba(115,75,129,0.2);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.95rem;
+    border-radius: 2px;
+  }
+  .sector-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.05rem; font-weight: 500; color: var(--ink); margin-bottom: 0.3rem;
+  }
+  .sector-desc { font-size: 0.76rem; color: var(--mid); font-weight: 300; line-height: 1.55; }
+
+  /* ─── INSIGHTS ─── */
+  #insights { background: var(--white); }
+  .insights-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 3rem; }
+  .insights-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 1.5rem; }
+  .insight-card { border: 1px solid var(--line); overflow: hidden; transition: border-color 0.3s, box-shadow 0.3s; }
+  .insight-card:hover { border-color: var(--plum-light); box-shadow: 0 6px 24px rgba(115,75,129,0.08); }
+  .insight-thumb {
+    height: 170px; position: relative; overflow: hidden;
+    display: flex; align-items: flex-end; padding: 1.2rem;
+  }
+  .insight-card:nth-child(1) .insight-thumb { background: linear-gradient(135deg, var(--plum-dark) 0%, #3a2050 100%); }
+  .insight-card:nth-child(2) .insight-thumb { background: linear-gradient(135deg, #2a1a3a 0%, var(--plum) 100%); }
+  .insight-card:nth-child(3) .insight-thumb { background: linear-gradient(135deg, var(--plum) 0%, #9a79a6 100%); }
+  .insight-thumb-grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.06) 1px, transparent 1px);
+    background-size: 28px 28px;
+  }
+  .insight-type {
+    position: relative; z-index: 1;
+    font-size: 0.58rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: rgba(255,255,255,0.8);
+    background: rgba(115,75,129,0.6);
+    padding: 0.2rem 0.5rem;
+    border-radius: 1px;
+  }
+  .insight-body { padding: 1.3rem; }
+  .insight-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem; font-weight: 500; color: var(--ink);
+    margin-bottom: 0.5rem; line-height: 1.3;
+  }
+  .insight-meta { font-size: 0.68rem; color: var(--mid); letter-spacing: 0.05em; }
+
+  /* ─── CONTACT ─── */
+  #contact {
+    background: var(--plum-dark);
+    color: var(--white);
+    padding: 6rem 3rem;
+    position: relative; overflow: hidden;
+  }
+  #contact::after {
+    content: 'ARCHITEK';
+    position: absolute;
+    bottom: -2.5rem; right: -1rem;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 13rem; font-weight: 600;
+    color: rgba(255,255,255,0.025);
+    letter-spacing: -0.05em;
+    pointer-events: none; white-space: nowrap;
+  }
+  .contact-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 6rem; position: relative; z-index: 1; align-items: start;
+  }
+  #contact .section-label { color: var(--plum-light); }
+  #contact .section-label::before { background: var(--plum-light); }
+  #contact .section-title { color: var(--white); }
+  #contact .section-intro { color: rgba(255,255,255,0.45); }
+  .contact-details { display: flex; flex-direction: column; gap: 0; margin-top: 2.5rem; }
+  .contact-item {
+    display: flex; align-items: flex-start; gap: 1rem;
+    padding: 1.3rem 0;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+  }
+  .contact-item:last-child { border-bottom: none; }
+  .contact-icon {
+    width: 36px; height: 36px; flex-shrink: 0;
+    border: 1px solid rgba(154,121,166,0.35);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.85rem; color: var(--plum-light);
+    border-radius: 2px;
+    font-style: normal;
+  }
+  .contact-label {
+    font-size: 0.58rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: rgba(255,255,255,0.28); margin-bottom: 0.3rem;
+  }
+  .contact-value {
+    font-size: 0.88rem; color: rgba(255,255,255,0.82);
+    font-weight: 300; text-decoration: none; transition: color 0.2s;
+  }
+  a.contact-value:hover { color: var(--plum-light); }
+  .contact-form-area {
+    padding: 2.5rem;
+    border: 1px solid rgba(255,255,255,0.08);
+    background: rgba(255,255,255,0.03);
+    border-radius: 2px;
+  }
+  .form-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem; color: var(--white); margin-bottom: 1.5rem; font-weight: 400;
+  }
+  .form-group { margin-bottom: 1.1rem; }
+  .form-group label {
+    display: block; font-size: 0.6rem; letter-spacing: 0.18em;
+    text-transform: uppercase; color: rgba(255,255,255,0.35); margin-bottom: 0.45rem;
+  }
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    width: 100%;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.84rem; font-weight: 300;
+    padding: 0.75rem 1rem;
+    outline: none;
+    transition: border-color 0.2s, background 0.2s;
+    appearance: none; border-radius: 2px;
+  }
+  .form-group input::placeholder,
+  .form-group textarea::placeholder { color: rgba(255,255,255,0.18); }
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus { border-color: var(--plum-light); background: rgba(154,121,166,0.07); }
+  .form-group textarea { height: 100px; resize: vertical; }
+  .form-group select option { background: #3a2050; color: var(--white); }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .btn-submit {
+    width: 100%;
+    background: var(--plum-light);
+    color: var(--white);
+    border: none;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase;
+    font-weight: 500; padding: 1rem;
+    cursor: pointer; margin-top: 0.8rem;
+    border-radius: 2px;
+    transition: background 0.2s;
+  }
+  .btn-submit:hover { background: var(--plum); }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: #180d22;
+    padding: 2rem 3rem;
+    display: flex; align-items: center; justify-content: space-between;
+    border-top: 1px solid rgba(255,255,255,0.05);
+  }
+  .footer-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem; color: rgba(255,255,255,0.45);
+  }
+  .footer-logo span { color: var(--plum-light); }
+  .footer-copy { font-size: 0.63rem; color: rgba(255,255,255,0.18); letter-spacing: 0.08em; }
+  .footer-links { display: flex; gap: 1.5rem; }
+  .footer-links a {
+    font-size: 0.63rem; letter-spacing: 0.12em; text-transform: uppercase;
+    color: rgba(255,255,255,0.22); text-decoration: none; transition: color 0.2s;
+  }
+  .footer-links a:hover { color: var(--plum-light); }
+
+  /* ─── I18N ─── */
+  .lang-en [data-lang-show="fr"],
+  .lang-fr [data-lang-show="en"] { display: none !important; }
+
+  /* ─── REVEAL ─── */
+  .reveal { opacity: 0; transform: translateY(22px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 1024px) {
+    .hero { grid-template-columns: 1fr; }
+    .hero-right { display: none; }
+    .expertise-grid { grid-template-columns: 1fr; }
+    .steps { grid-template-columns: repeat(2, 1fr); }
+    .expertise-header, .approach-header, .sectors-header { grid-template-columns: 1fr; gap: 2rem; }
+    .insights-grid { grid-template-columns: 1fr; }
+    .contact-grid { grid-template-columns: 1fr; gap: 3rem; }
+    .sectors-list { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 768px) {
+    nav, .lang-bar { padding: 0 1.5rem; }
+    .nav-links { display: none; }
+    section, #contact { padding: 4rem 1.5rem; }
+    .hero-left { padding: 3rem 1.5rem; }
+    .hero-stats { flex-wrap: wrap; gap: 1.5rem; }
+    .sectors-list { grid-template-columns: 1fr; }
+    footer { flex-direction: column; gap: 1rem; text-align: center; }
+    .form-row { grid-template-columns: 1fr; }
+    .insights-header { flex-direction: column; align-items: flex-start; gap: 1rem; }
+  }
+</style>
+</head>
+<body class="lang-fr">
+
+<!-- LANG BAR -->
+<div class="lang-bar">
+  <div class="lang-toggle">
+    <button class="lang-btn active" onclick="setLang('fr')">FR</button>
+    <span class="lang-sep">|</span>
+    <button class="lang-btn" onclick="setLang('en')">EN</button>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav id="main-nav">
+  <a class="nav-logo" href="#">
+    <span class="nav-logo-name">Archite<span>k</span></span>
+    <span class="nav-logo-tag">Consulting</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#expertise">
+      <span data-lang-show="fr">Expertise</span>
+      <span data-lang-show="en">Expertise</span>
+    </a></li>
+    <li><a href="#approach">
+      <span data-lang-show="fr">Approche</span>
+      <span data-lang-show="en">Approach</span>
+    </a></li>
+    <li><a href="#sectors">
+      <span data-lang-show="fr">Secteurs</span>
+      <span data-lang-show="en">Sectors</span>
+    </a></li>
+    <li><a href="#insights">Insights</a></li>
+    <li><a href="#contact" class="nav-cta">
+      <span data-lang-show="fr">Nous contacter</span>
+      <span data-lang-show="en">Contact us</span>
+    </a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-eyebrow">
+      <span data-lang-show="fr">Cabinet de conseil en transformation IT</span>
+      <span data-lang-show="en">Enterprise IT Transformation Consulting</span>
+    </div>
+    <h1 class="hero-title">
+      <span data-lang-show="fr">Façonner l'avenir <em>de la technologie</em> d'entreprise</span>
+      <span data-lang-show="en">Shaping the future <em>of Enterprise</em> Technology</span>
+    </h1>
+    <p class="hero-sub">
+      <span data-lang-show="fr">Nous guidons les organisations dans leur transformation numérique profonde — architecture IT, intelligence artificielle, modernisation des systèmes et stratégie data.</span>
+      <span data-lang-show="en">We guide organizations through deep digital transformation — IT architecture, artificial intelligence, system modernization and data strategy.</span>
+    </p>
+    <div class="hero-actions">
+      <a href="#contact" class="btn-primary">
+        <span data-lang-show="fr">Démarrer un projet →</span>
+        <span data-lang-show="en">Start a project →</span>
+      </a>
+      <a href="#expertise" class="btn-secondary">
+        <span data-lang-show="fr">Notre expertise</span>
+        <span data-lang-show="en">Our expertise</span>
+      </a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="stat-num">15+</div>
+        <div class="stat-label">
+          <span data-lang-show="fr">Années d'expérience</span>
+          <span data-lang-show="en">Years of experience</span>
+        </div>
+      </div>
+      <div>
+        <div class="stat-num">200+</div>
+        <div class="stat-label">
+          <span data-lang-show="fr">Projets livrés</span>
+          <span data-lang-show="en">Projects delivered</span>
+        </div>
+      </div>
+      <div>
+        <div class="stat-num">40+</div>
+        <div class="stat-label">
+          <span data-lang-show="fr">Clients grands comptes</span>
+          <span data-lang-show="en">Enterprise clients</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-grid-bg"></div>
+    <div class="hero-orb hero-orb-1"></div>
+    <div class="hero-orb hero-orb-2"></div>
+    <div class="hero-diagram">
+      <div class="diagram-node">
+        <div class="node-tag">Pilier 01 / Pillar 01</div>
+        <div class="node-name">Architecture IT</div>
+        <div class="node-chips">
+          <span class="node-chip">Entreprise</span>
+          <span class="node-chip">Fonctionnelle</span>
+          <span class="node-chip">TOGAF</span>
+        </div>
+      </div>
+      <div class="diagram-node">
+        <div class="node-tag">Pilier 02 / Pillar 02</div>
+        <div class="node-name">IA & Data</div>
+        <div class="node-chips">
+          <span class="node-chip">GenAI</span>
+          <span class="node-chip">MLOps</span>
+          <span class="node-chip">Data Strategy</span>
+        </div>
+      </div>
+      <div class="diagram-node">
+        <div class="node-tag">Pilier 03 / Pillar 03</div>
+        <div class="node-name">Transformation & Modernisation</div>
+        <div class="node-chips">
+          <span class="node-chip">Cloud</span>
+          <span class="node-chip">Agile</span>
+          <span class="node-chip">Legacy</span>
+        </div>
+      </div>
+    </div>
+    <div class="hero-quote">
+      <div class="hero-quote-text">Shaping the Future of Enterprise Technology</div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERTISE -->
+<section id="expertise">
+  <div class="expertise-header reveal">
+    <div>
+      <div class="section-label">
+        <span data-lang-show="fr">Nos domaines d'expertise</span>
+        <span data-lang-show="en">Our areas of expertise</span>
+      </div>
+      <h2 class="section-title">
+        <span data-lang-show="fr">Trois piliers, <em>une vision intégrée</em></span>
+        <span data-lang-show="en">Three pillars, <em>one integrated vision</em></span>
+      </h2>
+    </div>
+    <p class="section-intro">
+      <span data-lang-show="fr">Chaque engagement mobilise une combinaison unique de savoir-faire technique et de sens des affaires pour délivrer des transformations durables et mesurables.</span>
+      <span data-lang-show="en">Each engagement combines technical expertise and business acumen to deliver sustainable, measurable transformations.</span>
+    </p>
+  </div>
+  <div class="expertise-grid">
+
+    <!-- CARD 1 -->
+    <div class="expertise-card reveal">
+      <div class="card-header">
+        <div class="card-number">01</div>
+        <div class="card-icon">🏛️</div>
+        <div class="card-title">
+          <span data-lang-show="fr">Architecture IT</span>
+          <span data-lang-show="en">IT Architecture</span>
+        </div>
+      </div>
+      <div class="card-body">
+        <p class="card-text">
+          <span data-lang-show="fr">Conception et alignement des architectures SI avec les objectifs stratégiques. Nous aidons les DSI à structurer leur patrimoine applicatif et à piloter l'évolution de leur système d'information.</span>
+          <span data-lang-show="en">Design and alignment of IS architectures with strategic objectives. We help CIOs structure their application landscape and steer the evolution of their information system.</span>
+        </p>
+        <div class="card-services">
+          <div class="service-line">
+            <span data-lang-show="fr">Architecture d'entreprise (TOGAF, ArchiMate)</span>
+            <span data-lang-show="en">Enterprise Architecture (TOGAF, ArchiMate)</span>
+          </div>
+          <div class="service-line">
+            <span data-lang-show="fr">Architecture fonctionnelle & applicative</span>
+            <span data-lang-show="en">Functional & application architecture</span>
+          </div>
+          <div class="service-line">
+            <span data-lang-show="fr">Architecture technique & infrastructure</span>
+            <span data-lang-show="en">Technical & infrastructure architecture</span>
+          </div>
+          <div class="service-line">
+            <span data-lang-show="fr">Schéma directeur SI & urbanisation</span>
+            <span data-lang-show="en">IS master plan & urbanization</span>
+          </div>
+          <div class="service-line">
+            <span data-lang-show="fr">Gouvernance IT & référentiels</span>
+            <span data-lang-show="en">IT governance & frameworks</span>
+          </div>
+        </div>
+        <div class="card-tags">
+          <span class="tag">TOGAF</span>
+          <span class="tag">ArchiMate</span>
+          <span class="tag">SOA</span>
+          <span class="tag">API-First</span>
+          <span class="tag">Hexagonal</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- CARD 2 -->
+    <div class="expertise-card reveal">
+      <div class="card-header">
+        <div class="card-number">02</div>
+        <div class="card-icon">🤖</div>
+        <div class="card-title">
+          <span data-lang-show="fr">IA & Data</span>
+          <span data-lang-show="en">AI & Data</span>
+        </div>
+      </div>
+      <div class="card-body">
+        <p class="card-text">
+          <span data-lang-show="fr">Stratégie data & IA générative, déploiement de solutions intelligentes et gouvernance des données pour transformer vos actifs informationnels en avantages concurrentiels.</span>
+          <span data-lang-show="en">Data & generative AI strategy, intelligent solutions deployment and data governance to transform your information assets into competitive advantages.</span>
+        </p>
+        <div class="card-services">
+          <div class="service-line">
+            <span data-lang-show="fr">Stratégie IA générative & LLM</span>
+            <span data-lang-show="en">Generative AI & LLM strategy</span>
+          </div>
+          <div class="service-line">
+            <span data-lang-show="fr">Data platforms modernes (Lakehouse, Mesh)</span>
+            <span data-lang-show="en">Modern data platforms (Lakehouse, Mesh)</span>
+          </div>
+          <div class="service-line">
+            <span data-lang-show="fr">Gouvernance & qualité des données</span>
+            <span data-lang-show="en">Data governance & quality</span>
+          </div>
+          <div class="service-line">
+            <span data-lang-show="fr">MLOps & industrialisation IA</span>
+            <span data-lang-show="en">MLOps & AI industrialization</span>
+          </div>
+          <div class="service-line">
+            <span data-lang-show="fr">Automatisation intelligente (RPA + IA)</span>
+            <span data-lang-show="en">Intelligent automation (RPA + AI)</span>
+          </div>
+        </div>
+        <div class="card-tags">
+          <span class="tag">GenAI</span>
+          <span class="tag">RAG</span>
+          <span class="tag">MLOps</span>
+          <span class="tag">Data Mesh</span>
+          <span class="tag">MDM</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- CARD 3 -->
+    <div class="expertise-card reveal">
+      <div class="card-header">
+        <div class="card-number">03</div>
+        <div class="card-icon">⚙️</div>
+        <div class="card-title">
+          <span data-lang-show="fr">Transformation Digitale & Modernisation</span>
+          <span data-lang-show="en">Digital Transformation & Modernization</span>
+        </div>
+      </div>
+      <div class="card-body">
+        <p class="card-text">
+          <span data-lang-show="fr">Accompagnement des programmes de transformation à grande échelle, migration cloud, refonte des systèmes legacy et conduite du changement pour inscrire la transformation dans la durée.</span>
+          <span data-lang-show="en">Supporting large-scale transformation programs, cloud migration, legacy system overhaul and change management to embed transformation over time.</span>
+        </p>
+        <div class="card-services">
+          <div class="service-line">
+            <span data-lang-show="fr">Migration & adoption cloud (Azure, AWS, GCP)</span>
+            <span data-lang-show="en">Cloud migration & adoption (Azure, AWS, GCP)</span>
+          </div>
+          <div class="service-line">
+            <span data-lang-show="fr">Modernisation des systèmes legacy</span>
+            <span data-lang-show="en">Legacy system modernization</span>
+          </div>
+          <div class="service-line">
+            <span data-lang-show="fr">Agilité à l'échelle (SAFe, LeSS)</span>
+            <span data-lang-show="en">Scaled agility (SAFe, LeSS)</span>
+          </div>
+          <div class="service-line">
+            <span data-lang-show="fr">Conduite du changement & adoption</span>
+            <span data-lang-show="en">Change management & adoption</span>
+          </div>
+          <div class="service-line">
+            <span data-lang-show="fr">DevSecOps & culture d'ingénierie</span>
+            <span data-lang-show="en">DevSecOps & engineering culture</span>
+          </div>
+        </div>
+        <div class="card-tags">
+          <span class="tag">Cloud</span>
+          <span class="tag">Microservices</span>
+          <span class="tag">SAFe</span>
+          <span class="tag">DevSecOps</span>
+          <span class="tag">API</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- APPROACH -->
+<section id="approach">
+  <div class="approach-inner">
+    <div class="approach-header reveal">
+      <div>
+        <div class="section-label">
+          <span data-lang-show="fr">Notre méthode</span>
+          <span data-lang-show="en">Our method</span>
+        </div>
+        <h2 class="section-title">
+          <span data-lang-show="fr">Une approche <em>rigoureuse</em> et orientée impact</span>
+          <span data-lang-show="en">A <em>rigorous</em>, impact-driven approach</span>
+        </h2>
+      </div>
+      <p class="section-intro">
+        <span data-lang-show="fr">Chaque mission suit une méthodologie éprouvée, combinant diagnostic approfondi, co-construction avec vos équipes et délivrance de résultats mesurables.</span>
+        <span data-lang-show="en">Each engagement follows a proven methodology, combining in-depth diagnostics, co-construction with your teams and delivery of measurable results.</span>
+      </p>
+    </div>
+    <div class="steps">
+      <div class="step reveal">
+        <div class="step-num">01</div>
+        <div class="step-title">
+          <span data-lang-show="fr">Diagnostic</span>
+          <span data-lang-show="en">Assessment</span>
+        </div>
+        <p class="step-text">
+          <span data-lang-show="fr">Analyse de maturité, cartographie des capacités et identification des opportunités de transformation à fort impact.</span>
+          <span data-lang-show="en">Maturity analysis, capability mapping and identification of high-impact transformation opportunities.</span>
+        </p>
+      </div>
+      <div class="step reveal">
+        <div class="step-num">02</div>
+        <div class="step-title">
+          <span data-lang-show="fr">Stratégie</span>
+          <span data-lang-show="en">Strategy</span>
+        </div>
+        <p class="step-text">
+          <span data-lang-show="fr">Définition de la vision cible, élaboration de la roadmap et business case détaillé avec ROI démontrable.</span>
+          <span data-lang-show="en">Target vision definition, roadmap development and detailed business case with demonstrable ROI.</span>
+        </p>
+      </div>
+      <div class="step reveal">
+        <div class="step-num">03</div>
+        <div class="step-title">
+          <span data-lang-show="fr">Exécution</span>
+          <span data-lang-show="en">Execution</span>
+        </div>
+        <p class="step-text">
+          <span data-lang-show="fr">Pilotage des programmes, accompagnement des équipes et livraison agile avec jalons clairs et gouvernance adaptée.</span>
+          <span data-lang-show="en">Program management, team coaching and agile delivery with clear milestones and adapted governance.</span>
+        </p>
+      </div>
+      <div class="step reveal">
+        <div class="step-num">04</div>
+        <div class="step-title">
+          <span data-lang-show="fr">Ancrage</span>
+          <span data-lang-show="en">Embedding</span>
+        </div>
+        <p class="step-text">
+          <span data-lang-show="fr">Transfert de compétences, montée en autonomie des équipes et culture d'amélioration continue.</span>
+          <span data-lang-show="en">Skills transfer, team capability building and continuous improvement culture.</span>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTORS -->
+<section id="sectors">
+  <div class="sectors-header reveal">
+    <div>
+      <div class="section-label">
+        <span data-lang-show="fr">Secteurs d'intervention</span>
+        <span data-lang-show="en">Industry sectors</span>
+      </div>
+      <h2 class="section-title">
+        <span data-lang-show="fr">Une expertise <em>sectorielle</em> reconnue</span>
+        <span data-lang-show="en"><em>Sector expertise</em> recognized by industry</span>
+      </h2>
+    </div>
+    <p class="section-intro">
+      <span data-lang-show="fr">Nous intervenons auprès des acteurs majeurs de secteurs fortement réglementés et en pleine transformation numérique.</span>
+      <span data-lang-show="en">We work with major players in highly regulated sectors undergoing deep digital transformation.</span>
+    </p>
+  </div>
+  <div class="sectors-list">
+    <div class="sector-item reveal">
+      <div class="sector-icon">🏦</div>
+      <div>
+        <div class="sector-name">
+          <span data-lang-show="fr">Banque & Finance</span>
+          <span data-lang-show="en">Banking & Finance</span>
+        </div>
+        <p class="sector-desc">
+          <span data-lang-show="fr">Core banking, open banking, transaction banking, conformité réglementaire DORA/NIS2.</span>
+          <span data-lang-show="en">Core banking, open banking, transaction banking, DORA/NIS2 compliance.</span>
+        </p>
+      </div>
+    </div>
+    <div class="sector-item reveal">
+      <div class="sector-icon">🛡️</div>
+      <div>
+        <div class="sector-name">
+          <span data-lang-show="fr">Assurance</span>
+          <span data-lang-show="en">Insurance</span>
+        </div>
+        <p class="sector-desc">
+          <span data-lang-show="fr">Digitalisation assurantielle, InsurTech, gestion des sinistres automatisée, modernisation SI.</span>
+          <span data-lang-show="en">Insurance digitization, InsurTech, automated claims, IS modernization.</span>
+        </p>
+      </div>
+    </div>
+    <div class="sector-item reveal">
+      <div class="sector-icon">⚡</div>
+      <div>
+        <div class="sector-name">
+          <span data-lang-show="fr">Énergie & Utilities</span>
+          <span data-lang-show="en">Energy & Utilities</span>
+        </div>
+        <p class="sector-desc">
+          <span data-lang-show="fr">Transition numérique, smart grids, IoT industriel, plateformes de gestion des actifs.</span>
+          <span data-lang-show="en">Digital transition, smart grids, industrial IoT, asset management platforms.</span>
+        </p>
+      </div>
+    </div>
+    <div class="sector-item reveal">
+      <div class="sector-icon">🏭</div>
+      <div>
+        <div class="sector-name">
+          <span data-lang-show="fr">Industrie & Manufacturing</span>
+          <span data-lang-show="en">Industry & Manufacturing</span>
+        </div>
+        <p class="sector-desc">
+          <span data-lang-show="fr">Industrie 4.0, jumeaux numériques, supply chain intelligente, optimisation par l'IA.</span>
+          <span data-lang-show="en">Industry 4.0, digital twins, intelligent supply chain, AI-driven optimization.</span>
+        </p>
+      </div>
+    </div>
+    <div class="sector-item reveal">
+      <div class="sector-icon">🏛️</div>
+      <div>
+        <div class="sector-name">
+          <span data-lang-show="fr">Secteur Public</span>
+          <span data-lang-show="en">Public Sector</span>
+        </div>
+        <p class="sector-desc">
+          <span data-lang-show="fr">Modernisation de l'État, dématérialisation, interopérabilité SI, souveraineté numérique.</span>
+          <span data-lang-show="en">Government modernization, dematerialization, IS interoperability, digital sovereignty.</span>
+        </p>
+      </div>
+    </div>
+    <div class="sector-item reveal">
+      <div class="sector-icon">🛒</div>
+      <div>
+        <div class="sector-name">
+          <span data-lang-show="fr">Retail & Distribution</span>
+          <span data-lang-show="en">Retail & Distribution</span>
+        </div>
+        <p class="sector-desc">
+          <span data-lang-show="fr">Commerce unifié, personnalisation IA, supply chain omnicanal, expérience client digitale.</span>
+          <span data-lang-show="en">Unified commerce, AI personalization, omnichannel supply chain, digital CX.</span>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INSIGHTS -->
+<section id="insights">
+  <div class="insights-header reveal">
+    <div>
+      <div class="section-label">Insights</div>
+      <h2 class="section-title">
+        <span data-lang-show="fr">Notre point de vue <em>sur le marché</em></span>
+        <span data-lang-show="en">Our perspective <em>on the market</em></span>
+      </h2>
+    </div>
+    <a href="#" class="btn-secondary" style="white-space:nowrap;">
+      <span data-lang-show="fr">Tous les articles →</span>
+      <span data-lang-show="en">All articles →</span>
+    </a>
+  </div>
+  <div class="insights-grid">
+    <div class="insight-card reveal">
+      <div class="insight-thumb">
+        <div class="insight-thumb-grid"></div>
+        <span class="insight-type">
+          <span data-lang-show="fr">Rapport de marché</span>
+          <span data-lang-show="en">Market report</span>
+        </span>
+      </div>
+      <div class="insight-body">
+        <div class="insight-title">
+          <span data-lang-show="fr">IA Générative en entreprise : état des lieux et perspectives 2025–2027</span>
+          <span data-lang-show="en">Generative AI in enterprise: landscape and outlook 2025–2027</span>
+        </div>
+        <div class="insight-meta">
+          <span data-lang-show="fr">Mars 2025 · 12 min</span>
+          <span data-lang-show="en">March 2025 · 12 min</span>
+        </div>
+      </div>
+    </div>
+    <div class="insight-card reveal">
+      <div class="insight-thumb">
+        <div class="insight-thumb-grid"></div>
+        <span class="insight-type">Point de vue</span>
+      </div>
+      <div class="insight-body">
+        <div class="insight-title">
+          <span data-lang-show="fr">Architecture hexagonale : pourquoi les DSI l'adoptent</span>
+          <span data-lang-show="en">Hexagonal architecture: why CIOs are adopting it</span>
+        </div>
+        <div class="insight-meta">
+          <span data-lang-show="fr">Fév. 2025 · 8 min</span>
+          <span data-lang-show="en">Feb. 2025 · 8 min</span>
+        </div>
+      </div>
+    </div>
+    <div class="insight-card reveal">
+      <div class="insight-thumb">
+        <div class="insight-thumb-grid"></div>
+        <span class="insight-type">
+          <span data-lang-show="fr">Réglementaire</span>
+          <span data-lang-show="en">Regulatory</span>
+        </span>
+      </div>
+      <div class="insight-body">
+        <div class="insight-title">
+          <span data-lang-show="fr">DORA 2025 : enjeux opérationnels pour les institutions financières</span>
+          <span data-lang-show="en">DORA 2025: operational challenges for financial institutions</span>
+        </div>
+        <div class="insight-meta">
+          <span data-lang-show="fr">Jan. 2025 · 6 min</span>
+          <span data-lang-show="en">Jan. 2025 · 6 min</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-grid">
+    <div>
+      <div class="section-label">
+        <span data-lang-show="fr">Nous contacter</span>
+        <span data-lang-show="en">Get in touch</span>
+      </div>
+      <h2 class="section-title">
+        <span data-lang-show="fr">Parlons de votre <em>transformation</em></span>
+        <span data-lang-show="en">Let's talk about your <em>transformation</em></span>
+      </h2>
+      <p class="section-intro">
+        <span data-lang-show="fr">Nous sommes à votre disposition pour échanger sur vos enjeux et explorer comment Architek Consulting peut vous accompagner.</span>
+        <span data-lang-show="en">We are available to discuss your challenges and explore how Architek Consulting can support you.</span>
+      </p>
+      <div class="contact-details">
+        <div class="contact-item">
+          <div class="contact-icon">📍</div>
+          <div>
+            <div class="contact-label">
+              <span data-lang-show="fr">Adresse</span>
+              <span data-lang-show="en">Address</span>
+            </div>
+            <div class="contact-value">Paris, France</div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">✉</div>
+          <div>
+            <div class="contact-label">Email</div>
+            <a class="contact-value" href="mailto:contact@architeck-consulting.com">contact@architeck-consulting.com</a>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">☎</div>
+          <div>
+            <div class="contact-label">
+              <span data-lang-show="fr">Téléphone</span>
+              <span data-lang-show="en">Phone</span>
+            </div>
+            <a class="contact-value" href="tel:+33601626048">+33 6 01 62 60 48</a>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon" style="font-family:'DM Sans',sans-serif;font-weight:600;font-size:0.7rem;">in</div>
+          <div>
+            <div class="contact-label">LinkedIn</div>
+            <a class="contact-value" href="https://www.linkedin.com/company/architek-consulting" target="_blank" rel="noopener">linkedin.com/company/architek-consulting</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="contact-form-area reveal">
+      <div class="form-title">
+        <span data-lang-show="fr">Démarrer une conversation</span>
+        <span data-lang-show="en">Start a conversation</span>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>
+            <span data-lang-show="fr">Prénom</span>
+            <span data-lang-show="en">First name</span>
+          </label>
+          <input type="text" placeholder="Jean">
+        </div>
+        <div class="form-group">
+          <label>
+            <span data-lang-show="fr">Nom</span>
+            <span data-lang-show="en">Last name</span>
+          </label>
+          <input type="text" placeholder="Dupont">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" placeholder="j.dupont@entreprise.com">
+      </div>
+      <div class="form-group">
+        <label>
+          <span data-lang-show="fr">Organisation</span>
+          <span data-lang-show="en">Organization</span>
+        </label>
+        <input type="text" placeholder="Votre entreprise / Your company">
+      </div>
+      <div class="form-group">
+        <label>
+          <span data-lang-show="fr">Domaine d'intérêt</span>
+          <span data-lang-show="en">Area of interest</span>
+        </label>
+        <select>
+          <option value="" disabled selected>-- Sélectionner / Select --</option>
+          <option value="arch">Architecture IT</option>
+          <option value="ai">IA &amp; Data</option>
+          <option value="transfo">Transformation Digitale &amp; Modernisation</option>
+          <option value="other">Autre / Other</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>
+          <span data-lang-show="fr">Message</span>
+          <span data-lang-show="en">Message</span>
+        </label>
+        <textarea placeholder="Décrivez votre projet... / Describe your project..."></textarea>
+      </div>
+      <button class="btn-submit">
+        <span data-lang-show="fr">Envoyer le message →</span>
+        <span data-lang-show="en">Send message →</span>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Archite<span>k</span> Consulting</div>
+  <div class="footer-copy">© 2025 Architek Consulting.
+    <span data-lang-show="fr">Tous droits réservés.</span>
+    <span data-lang-show="en">All rights reserved.</span>
+  </div>
+  <div class="footer-links">
+    <a href="#">
+      <span data-lang-show="fr">Mentions légales</span>
+      <span data-lang-show="en">Legal notice</span>
+    </a>
+    <a href="#">
+      <span data-lang-show="fr">Confidentialité</span>
+      <span data-lang-show="en">Privacy</span>
+    </a>
+    <a href="https://www.linkedin.com/company/architek-consulting" target="_blank" rel="noopener">LinkedIn</a>
+  </div>
+</footer>
+
+<script>
+  function setLang(lang) {
+    document.body.classList.remove('lang-fr','lang-en');
+    document.body.classList.add('lang-' + lang);
+    document.querySelectorAll('.lang-btn').forEach(b => {
+      b.classList.toggle('active', b.textContent.trim().toLowerCase() === lang);
+    });
+    document.documentElement.lang = lang;
+  }
+  const nav = document.getElementById('main-nav');
+  window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 20));
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 90);
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
