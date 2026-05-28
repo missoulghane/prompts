@@ -1,6 +1,5 @@
 # Application Web Angular — Front-end Plateforme d’Annotation d’Images
-# Nom de code du projet : TAGTIC-UI
-# Attendu : Code de la solution en zip
+# Nom de code du projet : TAGTIC-WEB
 
 # 1. Objectif
 
@@ -23,18 +22,20 @@ L’ergonomie et le design system reposent sur **TailAdmin** (template d’admin
 * Angular 21 (composants **standalone**, pas de NgModule)
 * TypeScript 5.x
 * **Signals** pour la gestion d’état réactive
-* Tailwind CSS v4 (design system TailAdmin)
+* Tailwind CSS v4 (design system TailAdmin) — configuration **CSS native** (`@theme` dans `styles.css`, **pas** de `tailwind.config.js`)
 * TailAdmin Angular (template d’admin : layout, sidebar, UI kit)
 * Angular Router (routes standalone + lazy loading)
 * `HttpClient` + intercepteurs (`provideHttpClient(withInterceptors(...))`)
 * Reactive Forms (`FormGroup` / `FormControl`) pour les formulaires dynamiques
 * ApexCharts (`ng-apexcharts`) pour les indicateurs du tableau de bord
 * Flatpickr pour les champs de type `DATE`
-* RxJS (interop avec Signals via `toSignal` / `toObservable`)
+* RxJS (interop avec Signals via `toSignal()` / `toObservable()` — `toSignal()` recommandé pour exposer les flux `HttpClient` dans les stores)
 
 ## Outillage
 
 * Angular CLI
+* ESLint + Prettier
+* Karma/Jasmine (tests unitaires) ; Playwright (e2e, optionnel)
 * Build : `ng build` (esbuild)
 
 ---
@@ -46,7 +47,16 @@ L’application consomme l’API décrite dans le contexte back-end TAGTIC. Aucu
 ## Configuration
 
 * URL de base de l’API exposée via un fichier d’environnement : `environment.apiBaseUrl` (ex. `http://localhost:8080/api`).
-* Pas de Spring Security côté back : aucun token d’authentification à gérer dans cette version. Le champ `annotatedBy` / `createdBy` est saisi ou simulé côté UI (ex. champ « utilisateur courant » en haut de page).
+* Pas de Spring Security côté back : aucun token d’authentification à gérer dans cette version.
+
+## Utilisateur courant (simulé)
+
+En l’absence d’authentification, l’UI doit fournir une identité pour alimenter automatiquement les champs `createdBy` (projets/formulaires) et `annotatedBy` (annotations) :
+
+* un **`UserStore`** (service léger à base de Signal) expose `currentUser()` ;
+* la valeur est **persistée dans `localStorage`** afin de survivre aux rechargements de page ;
+* un champ « utilisateur courant » dans le header TailAdmin permet de saisir/changer ce nom (ex. « Morad ») ;
+* les services API injectent automatiquement `currentUser()` dans les payloads concernés — l’utilisateur n’a pas à le ressaisir à chaque formulaire.
 
 ## Enveloppe de réponse standardisée
 
@@ -71,7 +81,7 @@ src/app
     │       ├── api            (services HTTP par domaine)
     │       ├── interceptors   (enveloppe réponse, erreurs, loading)
     │       ├── models         (interfaces TypeScript = miroir des DTO API)
-    │       └── state          (stores à base de Signals)
+    │       └── state          (stores à base de Signals, dont UserStore persisté en localStorage)
     │
     ├── layout                 (coquille TailAdmin : sidebar, header, breadcrumb)
     │
@@ -222,7 +232,7 @@ Chaque service expose des méthodes typées qui appellent les endpoints décrits
 | Méthode                              | Verbe & endpoint                                                       |
 | ------------------------------------ | --------------------------------------------------------------------- |
 | `getPrefilledForm(projectId, imgId)` | `GET /api/projects/{projectId}/images/{imageId}/annotation-form`       |
-| `save(projectId, imgId, req)`        | `POST /api/projects/{projectId}/images/{imageId}/annotations`          |
+| `save(projectId, imgId, req)`        | `PUT /api/projects/{projectId}/images/{imageId}/annotation` (ressource unique, idempotent) |
 | `listByProject(projectId)`           | `GET /api/projects/{projectId}/annotations`                           |
 | `getByImage(projectId, imgId)`       | `GET /api/projects/{projectId}/images/{imageId}/annotation` (objet unique, `404` si absente) |
 
@@ -313,13 +323,15 @@ Les boutons de transition reflètent les règles de l’API et sont **désactiv�
 * Si aucun formulaire : bouton « Créer le formulaire » (`POST .../form`).
 * Si formulaire présent : éditeur des champs (`FormField`).
 
-Éditeur de champs dynamiques :
+> ⚠️ **Édition de la structure réservée au statut `DRAFT`.** L’éditeur de champs (ajout, suppression, changement de type ou d’ordre, modification des `validationRules`) **passe intégralement en lecture seule dès que le projet quitte `DRAFT`** (`READY`, `IN_PROGRESS`, `COMPLETED`, `ARCHIVED`). Modifier la structure d’un formulaire alors que des images sont déjà annotées corromprait le pipeline de validation typée de l’API pour les images restantes et l’historique snapshoté. En mode lecture seule, les champs et leurs règles sont affichés mais désactivés, avec un bandeau d’information (« Formulaire verrouillé : le projet n’est plus en brouillon »).
+
+Éditeur de champs dynamiques (actif uniquement en `DRAFT`) :
 
 * liste ordonnée des champs (drag & drop pour `orderIndex`) ;
 * pour chaque champ : `name`, `label`, `type` (TEXT/NUMBER/BOOLEAN/DATE/SELECT), `required`, `defaultValue`, `jsonMappingKey`, `validationRules` (éditeur JSON) ;
 * ajout en lot via `POST .../form/fields`.
 
-> L’ajout d’images et l’annotation ne sont pas bloqués par l’absence de formulaire **pour les images**, mais l’annotation nécessite un formulaire complet (statut `READY`). L’UI guide l’utilisateur dans cet ordre.
+> L’ajout d’images et l’annotation ne sont pas bloqués par l’absence de formulaire **pour les images**, mais l’annotation nécessite un formulaire complet (statut `READY`). L’UI guide l’utilisateur dans cet ordre : finaliser le formulaire en `DRAFT` → publier (`READY`) → annoter.
 
 ## 8.5 Images (onglet)
 
@@ -339,7 +351,7 @@ Cœur fonctionnel de l’application :
    * `BOOLEAN` → toggle ;
    * `DATE` → Flatpickr ;
 3. les champs `autoFilled = true` sont préremplis et visuellement marqués (icône « auto ») ;
-4. l’utilisateur complète/corrige, puis sauvegarde (`POST .../annotations`) ;
+4. l’utilisateur complète/corrige, puis sauvegarde via `PUT .../annotation` (verbe idempotent sur la ressource unique : créer ou remplacer l’annotation de l’image) ;
 5. l’`imageId` provient de l’URL (jamais du corps), conformément au contrat ;
 6. les valeurs sont envoyées en `string` (le typage/validation est refait côté API).
 
@@ -353,25 +365,36 @@ Disposition : aperçu de l’image (panneau gauche) + formulaire d’annotation 
 
 Routes standalone avec lazy loading par feature.
 
+Les composants des features sont exportés de façon **nommée** (`export class XxxComponent`). La syntaxe `loadComponent` doit donc résoudre explicitement l’export via `.then(m => m.XxxComponent)` — l’import direct ne fonctionnerait qu’avec un `export default`.
+
 ```typescript
 export const routes: Routes = [
   { path: '', component: LayoutComponent, children: [
-    { path: 'dashboard', loadComponent: () => import('./features/dashboard/dashboard.component') },
-    { path: 'projects', loadComponent: () => import('./features/projects/project-list.component') },
-    { path: 'projects/:projectId', loadComponent: () => import('./features/projects/project-detail.component'),
+    { path: 'dashboard',
+      loadComponent: () => import('./features/dashboard/dashboard.component').then(m => m.DashboardComponent) },
+    { path: 'projects',
+      loadComponent: () => import('./features/projects/project-list.component').then(m => m.ProjectListComponent) },
+    { path: 'projects/:projectId',
+      loadComponent: () => import('./features/projects/project-detail.component').then(m => m.ProjectDetailComponent),
       children: [
-        { path: 'overview',    loadComponent: () => import('./features/projects/project-overview.component') },
-        { path: 'form',        loadComponent: () => import('./features/forms/form-editor.component') },
-        { path: 'images',      loadComponent: () => import('./features/images/image-list.component') },
-        { path: 'annotations', loadComponent: () => import('./features/annotations/annotation-list.component') },
+        { path: 'overview',
+          loadComponent: () => import('./features/projects/project-overview.component').then(m => m.ProjectOverviewComponent) },
+        { path: 'form',
+          loadComponent: () => import('./features/forms/form-editor.component').then(m => m.FormEditorComponent) },
+        { path: 'images',
+          loadComponent: () => import('./features/images/image-list.component').then(m => m.ImageListComponent) },
+        { path: 'annotations',
+          loadComponent: () => import('./features/annotations/annotation-list.component').then(m => m.AnnotationListComponent) },
         { path: '', redirectTo: 'overview', pathMatch: 'full' },
       ] },
     { path: 'projects/:projectId/images/:imageId/annotate',
-      loadComponent: () => import('./features/annotations/annotate.component') },
+      loadComponent: () => import('./features/annotations/annotate.component').then(m => m.AnnotateComponent) },
     { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
   ] },
 ];
 ```
+
+> Alternative équivalente : exporter chaque composant en `export default` et conserver l’import direct. Pour la génération de code, on impose ici la forme explicite `.then(m => m.XxxComponent)`, sans ambiguïté.
 
 ---
 
@@ -381,13 +404,17 @@ Un store léger par domaine, à base de Signals (pas de NgRx requis pour ce pér
 
 * état exposé en `signal()` / `computed()` (lecture) ;
 * mutations via méthodes du store qui appellent les services API et mettent à jour les signaux ;
-* dérivations utiles en `computed` : ex. `canPublish = computed(() => hasForm() && fieldCount() > 0)` pour activer le bouton « Passer à READY ».
+* dérivations utiles en `computed` : ex. `canPublish = computed(() => hasForm() && fieldCount() > 0)` pour activer le bouton « Passer à READY » ;
+* `canEditForm = computed(() => status() === 'DRAFT')` pour piloter le mode lecture seule de l’éditeur de formulaire (cf. 8.4).
+
+> **Interop RxJS ↔ Signals** : `HttpClient` renvoie des `Observable`. Dans les stores, utiliser **`toSignal()`** (de `@angular/core/rxjs-interop`) pour convertir ces flux en signaux et exposer proprement l’état aux composants, plutôt que de gérer manuellement des subscriptions. Inversement, `toObservable()` permet de réagir aux changements de signaux (ex. recharger la liste quand la pagination change).
 
 ```text
 ProjectStore   → projects(), selectedProject(), status transitions
-FormStore      → form(), fields(), canPublish()
+FormStore      → form(), fields(), canPublish(), canEditForm()
 ImageStore     → images(), pagination, annotatedFlags()
 AnnotationStore→ prefilledForm(), saving(), annotationByImage()
+UserStore      → currentUser() (persisté en localStorage ; alimente createdBy / annotatedBy)
 ```
 
 ---
@@ -412,7 +439,7 @@ Le composant `dynamic-form` construit un `FormGroup` à partir des `FormField` :
 * **Composants UI** : cartes KPI, tables, badges de statut, boutons, modales, dropdowns, toggles, alertes/toasts.
 * **Formulaires** : inputs, selects, checkboxes/toggles, Flatpickr (dates), éditeur JSON (textarea stylé + validation).
 * **Charts** : ApexCharts pour le dashboard.
-* **Thème** : mode clair/sombre TailAdmin, palette Tailwind v4.
+* **Thème** : mode clair/sombre TailAdmin, palette définie en variables CSS Tailwind v4 (`@theme` dans `styles.css`).
 * **Responsive** : sidebar repliée en burger sur mobile, tables scrollables.
 
 ---
@@ -430,14 +457,14 @@ Le composant `dynamic-form` construit un `FormGroup` à partir des `FormField` :
 # 14. Structure du Projet Angular
 
 ```text
-
+tagtic-ui/
     ├── src/
     │   ├── app/
     │   │   ├── core/
     │   │   │   ├── api/            (ProjectApiService, FormApiService, ImageApiService, AnnotationApiService)
     │   │   │   ├── interceptors/   (api-response.interceptor.ts, error.interceptor.ts)
     │   │   │   ├── models/         (interfaces TS)
-    │   │   │   └── state/          (stores Signals)
+    │   │   │   └── state/          (ProjectStore, FormStore, ImageStore, AnnotationStore, UserStore)
     │   │   ├── layout/             (coquille TailAdmin)
     │   │   ├── shared/             (table, badge, modal, dynamic-form, json-editor)
     │   │   ├── features/
@@ -449,11 +476,12 @@ Le composant `dynamic-form` construit un `FormGroup` à partir des `FormField` :
     │   │   ├── app.config.ts       (providers : router, httpClient + interceptors)
     │   │   └── app.routes.ts
     │   ├── environments/           (apiBaseUrl)
-    │   └── styles.css              (Tailwind v4 + thème TailAdmin)
-    ├── tailwind.config (v4)
+    │   └── styles.css              (Tailwind v4 : `@import "tailwindcss";` + `@theme {}` + tokens TailAdmin)
     ├── angular.json
     └── package.json
 ```
+
+> **Tailwind CSS v4** : il n’y a **pas** de fichier `tailwind.config.js`. La configuration (couleurs, polices, breakpoints, tokens du thème TailAdmin) se fait entièrement en **CSS natif** dans `src/styles.css` via `@import "tailwindcss";` puis la directive `@theme { --color-...: ...; }`. Le mode sombre et la palette TailAdmin sont déclarés sous forme de variables CSS dans ce même fichier.
 
 ---
 
