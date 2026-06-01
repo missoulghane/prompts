@@ -1,0 +1,74 @@
+Rôle : Senior Partner dans un cabinet de conseil premium. Objectif : Analyser le contenu de présentation PoV sur l'avenir de l'activité SDLC. Contexte : SLIDE 1 — L'IA Agentic transforme le Software Delivery
+Titre accroche : De l'outil d'assistance à l'acteur du delivery
+Message d'ouverture (chapeau) :
+L'IA générative améliore déjà la productivité des développeurs. Mais ce n'est que la première étape. Le vrai changement en cours est plus profond : l'IA ne se contente plus d'assister — elle devient un contributeur actif du cycle de développement logiciel, aux côtés des équipes humaines.
+Les 4 transformations clés à retenir :
+
+Les agents IA deviennent des membres de l'équipe — Ils ne sont plus de simples outils passifs. Ils participent aux échanges, donnent du feedback, couvrent des expertises spécialisées, et déchargent les équipes de la charge cognitive répétitive pour leur permettre de se concentrer sur la valeur client.
+Un delivery plus rapide, sur un périmètre plus large — En prenant en charge la génération de code, l'exploration de bases de code inconnues et des pans de la conception de solution, les agents permettent à des équipes plus petites de livrer plus vite, avec une couverture fonctionnelle élargie.
+Une mémoire partagée à l'échelle de l'organisation — Contrairement aux humains, les agents peuvent ingérer et rappeler instantanément les connaissances de l'ensemble de l'organisation. Ils deviennent le tissu connectif de l'entreprise, brisant les silos de connaissance.
+Un modèle opérationnel à réinventer — Cette transformation technologique exige une évolution parallèle du modèle d'organisation, articulée autour de quatre leviers : un système multi-agents orchestré, un réseau de connaissances partagé, une structure d'équipe alignée sur la valeur, et une gouvernance robuste.
+Message de clôture slide :
+L'IA Agentic n'est pas une mise à jour technologique. C'est un changement de paradigme du delivery — et une opportunité concrète pour chaque équipe de gagner en vitesse, en qualité et en impact.
+SLIDE 2 — Les rôles d'aujourd'hui vs les rôles de demain
+Titre accroche : Du codeur au gouverneur : une évolution, pas une disparition
+Message d'ouverture :
+Avec l'IA qui prend progressivement en charge les tâches de codage, les profils de l'équipe engineering doivent évoluer. Ce n'est pas une menace : c'est une montée en puissance. Le centre de gravité des compétences se déplace — du code vers le jugement, de l'exécution vers l'orchestration.
+L'évolution par profil :
+Business Analyst / Product Owner
+
+Aujourd'hui : rédaction de specs, recettage, coordination avec les équipes tech.
+Demain : rôle renforcé — leur connaissance métier et leur empathie utilisateur deviennent le carburant du réseau de connaissances. Ils alimentent les agents, évaluent leurs outputs et restent les garants de la valeur livrée.
+Développeur
+
+Aujourd'hui : auteur principal du code, debug, documentation, revue manuelle.
+Demain : de créateur à gouverneur. Le développeur orchestre les agents, audite leur production, architecture les flux. Les juniors évoluent via le pair programming et le mob programming avec les agents — les seniors se spécialisent en architecture agentic ou en fiabilité des agents (Agent Reliability Engineer).
+Architecte
+
+Aujourd'hui : conception des patterns techniques, arbitrages d'architecture, documentation.
+Demain : architecte du système agentic — définition des guardrails, gouvernance des blueprints d'agents, cohérence technique du système multi-agents. L'architecture devient un asset stratégique majeur de l'organisation.
+Chef de projet / Delivery Manager
+
+Aujourd'hui : planification, suivi d'avancement, coordination des équipes, reporting.
+Demain : pilotage de la performance des flux agentiques, supervision "human-on-the-loop" (et non plus "in-the-loop"), gestion du risque de dérive comportementale des agents, AI FinOps (coût des LLMs, ROI des agents).
+Message de clôture slide :
+Ce passage de "codeur" à "system thinker" est au cœur de la transformation. Les équipes qui anticipent cette évolution — et qui investissent dans l'upskilling dès maintenant — prendront une avance décisive.
+SLIDE 3 — Un nouveau modèle de delivery
+Titre accroche : Agents IA et équipes humaines : une organisation hybride pour livrer plus, mieux, ensemble
+Message d'ouverture :
+L'IA Agentic ne transforme pas seulement les outils — elle réorganise la façon dont les équipes travaillent ensemble. Des équipes plus petites, plus autonomes, délivrées des dépendances inter-équipes grâce aux interfaces self-service des agents. Une nouvelle topologie de delivery est en train d'émerger.
+Les 3 principes du nouveau modèle :
+
+Des équipes plus petites, plus puissantes — Libérées des tâches répétitives de codage, des équipes réduites peuvent gérer une charge cognitive plus large et travailler de bout en bout sur leur périmètre produit. Elles s'appuient sur les agents comme interfaces self-service pour résoudre leurs dépendances sans attendre d'autres équipes.
+Une gouvernance comme filet de sécurité — Les agents font des erreurs (hallucinations, dérives). La réponse n'est pas de les freiner, mais de les encadrer : guardrails automatisés sous forme de policy-as-code, agents spécialisés dans la validation et la conformité, registre de confiance centralisé, métriques de fiabilité (taux de complétion des tâches, détection de dérive). La gouvernance n'est pas une contrainte — c'est ce qui rend le modèle viable à l'échelle.
+Un changement culturel avant tout — C'est la dimension la plus souvent négligée, et pourtant la plus déterminante. Le développeur "héros du code" laisse place au "system thinker". Les équipes cultivent un scepticisme sain envers les outputs des agents, adoptent le mob programming comme pratique centrale, et traitent les expériences ratées comme des apprentissages, pas des échecs.
+Message de conclusion mobilisateur :
+La transition vers l'SDLC Agentic est un voyage organisationnel complet — technologie, talent, structure, gouvernance, culture. Les organisations qui abordent ces dimensions en parallèle, avec une stratégie intégrée, seront les mieux positionnées pour en tirer la pleine valeur. Ce n'est pas une contrainte à subir : c'est une transformation à piloter — et c'est précisément ce que vos équipes sont en capacité de faire.
+SLIDE 4 — La transformation des talents : crise ou opportunité ?
+Titre accroche : Upskiller dès maintenant, ou subir le goulot d'étranglement demain
+Message d'ouverture :
+L'IA Agentic ne crée pas un problème de technologie, mais un défi de talents. Si les agents montent en puissance plus vite que les compétences humaines qui les pilotent, la valeur reste bloquée. Le vrai risque n'est pas que l'IA remplace les équipes — c'est qu'elle les dépasse, faute d'avoir investi à temps. L'upskilling n'est pas une option de confort : c'est le facteur limitant de toute la transformation.
+Les 3 axes de la stratégie talents :
+
+Faire évoluer les compétences, pas remplacer les personnes — Le centre de gravité se déplace du code vers la revue de code, la priorisation et l'audit. Les ingénieurs expérimentés migrent vers l'architecture, l'orchestration et la gouvernance. De nouveaux rôles émergent : knowledge architect, agentic architect, agent reliability engineer. Les spécialités étroites (front, base de données) se consolident en profils full-stack plus généralistes.
+Réinventer le parcours des juniors — Les tâches qui servaient traditionnellement à former les juniors sont désormais prises en charge par les agents. Le pairing devient obligatoire et le mob programming une voie de montée en compétence centrale. Les agents eux-mêmes peuvent fonctionner en mode "learner" ou "pairing" pour accompagner la formation sur le terrain.
+Doubles trajectoires pour les profils intermédiaires — Les ingénieurs mid-level choisissent entre deux voies : progresser vers un rôle de gouvernance / architecture, ou se spécialiser comme développeur expert d'agents. Dans tous les cas, quelqu'un doit prendre la propriété des agents et de l'architecture sous-jacente : c'est devenu un actif majeur de l'organisation.
+Message de clôture slide :
+La compétence humaine est le facteur limitant. Une stratégie talents explicite — qui guide ces transitions et soutient l'upskilling — n'est pas un accompagnement RH périphérique : c'est la condition pour que les agents délivrent réellement à l'échelle, sans créer de goulots d'étranglement chez les métiers.
+SLIDE 5 — Conclusion : une transformation à piloter, pas à subir
+Titre accroche : Cinq dimensions, une seule stratégie intégrée
+Message d'ouverture :
+Le passage à l'SDLC Agentic n'est pas une mise à jour technologique : c'est un voyage organisationnel complet qui touche cinq dimensions indissociables — architecture, talents, structure d'équipe, gouvernance et culture. Les traiter une par une, c'est échouer. Les piloter en parallèle, avec une stratégie intégrée, c'est ce que les auteurs appellent du system thinking appliqué.
+Les 5 leviers à activer en parallèle :
+
+Technologie — un système multi-agents orchestré, déployé sur une plateforme agentic robuste.
+Talents — transformation des ingénieurs de codeurs en architectes et auditeurs, soutenue par une stratégie d'upskilling.
+Structure — des équipes plus petites, alignées sur la valeur (stream-aligned), découplées via les interfaces self-service des agents.
+Gouvernance — guardrails en policy-as-code, agents de validation, registre de confiance, métriques de fiabilité, supervision "human-on-the-loop".
+Culture — la dimension la plus négligée et la plus déterminante : scepticisme sain, mob programming, droit à l'erreur.
+Les 2 convictions à graver :
+
+L'IA Agentic n'est pas là pour remplacer vos équipes — elle est là pour les augmenter. Le développeur "héros du code" devient "system thinker" ; l'humain passe de l'exécution au jugement et à l'orchestration.
+Sans déploiement à l'échelle, pas de valeur — seulement des goulots d'étranglement. Une adoption partielle, cantonnée à quelques équipes, déplace simplement le blocage vers les métiers et alourdit le change management. La pleine valeur ne se capte qu'avec une transformation menée à l'échelle, sur les cinq dimensions à la fois.
+Phrase de clôture (call to action) :
+Les organisations qui adaptent leurs personnes, leurs processus et leur culture en même temps que leur technologie prendront une avance décisive. Ce n'est pas une contrainte à subir : c'est une transformation à piloter — et c'est précisément ce que vos équipes sont en capacité de faire.
