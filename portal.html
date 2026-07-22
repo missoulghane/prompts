@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>GCP AI Service Console</title>
+
+<style>
+
+body {
+    margin:0;
+    font-family:Roboto,Arial,sans-serif;
+    background:#f8f9fa;
+    color:#202124;
+}
+
+
+/* TOP BAR */
+
+.topbar {
+    height:64px;
+    background:#1a73e8;
+    color:white;
+    display:flex;
+    align-items:center;
+    padding:0 25px;
+    gap:30px;
+}
+
+
+.logo {
+    font-size:22px;
+    font-weight:bold;
+}
+
+
+.project {
+    background:white;
+    color:#333;
+    padding:8px 15px;
+    border-radius:4px;
+}
+
+
+
+/* LAYOUT */
+
+.layout {
+    display:flex;
+}
+
+
+/* MENU */
+
+.sidebar {
+
+    width:260px;
+    background:white;
+    height:calc(100vh - 64px);
+    border-right:1px solid #ddd;
+}
+
+
+.menu {
+    padding:20px;
+}
+
+
+.menu div {
+
+    padding:12px;
+    border-radius:5px;
+    cursor:pointer;
+
+}
+
+
+.menu div:hover {
+
+    background:#e8f0fe;
+
+}
+
+
+
+
+/* MAIN */
+
+.main {
+
+    flex:1;
+    padding:30px;
+}
+
+
+.header {
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+}
+
+
+h1 {
+
+    font-size:28px;
+}
+
+
+.primary {
+
+    background:#1a73e8;
+    color:white;
+    border:0;
+    padding:12px 20px;
+    border-radius:4px;
+    cursor:pointer;
+
+}
+
+
+/* TABLE */
+
+.card {
+
+background:white;
+border-radius:8px;
+border:1px solid #dadce0;
+margin-top:25px;
+
+}
+
+
+table {
+
+width:100%;
+border-collapse:collapse;
+
+}
+
+
+th {
+
+text-align:left;
+background:#f1f3f4;
+padding:14px;
+
+}
+
+
+td {
+
+padding:14px;
+border-top:1px solid #eee;
+
+}
+
+
+tr:hover {
+
+background:#f8fbff;
+
+}
+
+
+
+/* STATUS */
+
+.status {
+
+padding:5px 12px;
+border-radius:20px;
+font-size:13px;
+
+}
+
+
+.running {
+
+background:#e6f4ea;
+color:#137333;
+
+}
+
+
+.legacy {
+
+background:#f1f3f4;
+color:#5f6368;
+
+}
+
+
+.future {
+
+background:#e8f0fe;
+color:#1967d2;
+
+}
+
+
+
+/* DETAIL PANEL */
+
+.panel {
+
+position:fixed;
+right:0;
+top:64px;
+width:420px;
+height:calc(100vh - 64px);
+background:white;
+border-left:1px solid #ddd;
+padding:25px;
+display:none;
+
+}
+
+
+.close {
+
+float:right;
+cursor:pointer;
+
+}
+
+
+.detail-title {
+
+font-size:22px;
+font-weight:bold;
+
+}
+
+
+.field {
+
+margin:20px 0;
+
+}
+
+
+.label {
+
+font-weight:bold;
+
+}
+
+
+</style>
+
+
+</head>
+
+
+<body>
+
+
+<div class="topbar">
+
+<div class="logo">
+☁ Google Cloud
+</div>
+
+<div class="project">
+Projet : IA-Transformation-Prod ▼
+</div>
+
+
+</div>
+
+
+
+<div class="layout">
+
+
+<div class="sidebar">
+
+<div class="menu">
+
+<div>🏠 Dashboard</div>
+
+<div>📦 Service Catalog</div>
+
+<div>⚙️ Workflows</div>
+
+<div>🔐 IAM</div>
+
+<div>📊 Monitoring</div>
+<div>📊 Facturation</div>
+
+</div>
+
+</div>
+
+
+
+<div class="main">
+
+
+<div class="header">
+
+<h1>
+Services IA provisionnés
+</h1>
+
+
+<button class="primary">
++ Créer un service
+</button>
+
+
+</div>
+
+
+
+<div class="card">
+
+
+<table>
+
+
+<thead>
+
+<tr>
+
+<th>Nom</th>
+
+<th>Type</th>
+
+<th>Statut</th>
+
+<th>Criticité</th>
+
+<th>Action</th>
+
+</tr>
+
+</thead>
+
+
+<tbody id="table">
+
+
+</tbody>
+
+
+</table>
+
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+
+
+<div class="panel" id="panel">
+
+<span class="close"
+onclick="closePanel()">
+✕
+</span>
+
+<div id="detail"></div>
+
+</div>
+
+
+
+
+
+<script>
+
+
+const services=[
+
+
+{
+name:"Classification ML classique",
+type:"ML Endpoint",
+status:"Legacy",
+criticite:"Faible",
+region:"europe-west9",
+desc:"Service atomique mature déjà en production."
+},
+
+
+{
+name:"Extraction ML classique",
+type:"ML Endpoint",
+status:"Legacy",
+criticite:"Faible",
+region:"europe-west9",
+desc:"Extraction documentaire historique."
+},
+
+
+{
+name:"Identification manuelle",
+type:"Workflow Human Task",
+status:"Legacy",
+criticite:"Moyenne",
+region:"europe-west9",
+desc:"Dépend de la transformation Camunda."
+},
+
+
+{
+name:"Extraction et saisie manuelle",
+type:"Workflow",
+status:"Legacy",
+criticite:"Moyenne",
+region:"europe-west9",
+desc:"Service non atomique."
+},
+
+
+{
+name:"Validation manuelle et contrôle",
+type:"Workflow",
+status:"Legacy",
+criticite:"Moyenne",
+region:"europe-west9",
+desc:"Contrôle humain intégré."
+},
+
+
+{
+name:"Détection fraude 2D-DOC",
+type:"AI Vision Model",
+status:"Avenir",
+criticite:"Haute",
+region:"europe-west9",
+desc:"Impact fort en cas d'erreur."
+},
+
+
+{
+name:"Classification GenAI",
+type:"Vertex AI Model",
+status:"Avenir",
+criticite:"Haute",
+region:"europe-west9",
+desc:"API GenAI à exposer."
+},
+
+
+{
+name:"Extraction GenAI",
+type:"Vertex AI Model",
+status:"Avenir",
+criticite:"Haute",
+region:"europe-west9",
+desc:"Service OCR Studio + GenAI."
+},
+
+
+{
+name:"Détection altération image",
+type:"Computer Vision",
+status:"Avenir",
+criticite:"Haute",
+region:"europe-west9",
+desc:"Périmètre en construction."
+},
+
+
+{
+name:"Orchestration Camunda",
+type:"Workflow Engine",
+status:"Avenir",
+criticite:"Critique",
+region:"europe-west9",
+desc:"Socle d'orchestration cible."
+}
+
+];
+
+
+
+function load(){
+
+
+let html="";
+
+
+services.forEach((s,i)=>{
+
+
+let css=
+s.status==="Legacy"
+?"legacy"
+:"future";
+
+
+html+=`
+
+<tr>
+
+<td>${s.name}</td>
+
+<td>${s.type}</td>
+
+<td>
+<span class="status ${css}">
+${s.status}
+</span>
+</td>
+
+<td>${s.criticite}</td>
+
+
+<td>
+
+<button onclick="openPanel(${i})">
+Voir
+</button>
+
+</td>
+
+
+</tr>
+
+`;
+
+});
+
+
+document.getElementById("table")
+.innerHTML=html;
+
+
+}
+
+
+
+function openPanel(i){
+
+
+let s=services[i];
+
+
+document.getElementById("detail").innerHTML=`
+
+<div class="detail-title">
+${s.name}
+</div>
+
+
+<div class="field">
+<span class="label">Type :</span>
+${s.type}
+</div>
+
+
+<div class="field">
+<span class="label">Région :</span>
+${s.region}
+</div>
+
+
+<div class="field">
+<span class="label">Statut :</span>
+${s.status}
+</div>
+
+
+<div class="field">
+<span class="label">Description :</span>
+<br>
+${s.desc}
+</div>
+
+
+<button class="primary"
+onclick="provision('${s.name}')">
+Déployer
+</button>
+
+`;
+
+
+document.getElementById("panel")
+.style.display="block";
+
+
+}
+
+
+
+function closePanel(){
+
+document.getElementById("panel")
+.style.display="none";
+
+}
+
+
+
+function provision(name){
+
+alert(
+"Provisionnement lancé : "+name
+);
+
+}
+
+
+load();
+
+
+</script>
+
+
+</body>
+</html>
