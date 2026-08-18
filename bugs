@@ -1,0 +1,15 @@
+Espace Syndic
+Tableau de bord :
+-	Afficher un badge avec les informations suivantes (au clic aller vers Information générale de la copro) :
+o	Nom de la copropriété
+o	Adresse
+o	Nombre de lots
+-	Afficher les badges des soldes des différentes comptes (idem que la vue d’ensemble de la comptabilité) (même au clic que sur la page actuelle)
+-	Afficher un badge avec le nombre d’échéances à collecter / Afficher le montant à collecter (Au clique aller sur la page avec un filtre le statut Non soldé er à échoir = false)
+-	Afficher un bouton pour saisir une recette (au clic naviguer vers la page de saisie de recette)
+-	Afficher le bouton pour saisir une dépense (au clic naviguer vers la page de saisie de recette)
+-	Afficher le badge de retour à l’espace copropriétaire, si l’utilisateur est copropriétaire
+Echéance :
+-	Bug sur la liste des échéances quand je désactive le filtre à échoir (Erreur SQL à coller)
+
+
