@@ -1,1 +1,36 @@
 Module "Gestion des invitations"
+
+- Message d'accueil sur l'invitation publique 
+Changer avec le message suivant 
+Pour rejoindre vos voisins et finaliser votre accès, c'est très simple :
+Sélectionnez votre lot (appartement, parking, box...) dans la liste ci-dessous.
+Le syndic prend le relais : il valide votre demande pour sécuriser l'accès.
+Une fois votre demande validée, , vous recevrez une notification et votre espace de gestion sera entièrement à vous ! 🎉
+
+Rajouter une case à cocher "Je certifie être le propriétaire ou le mandataire pour ce lot.", l'affichage du "2. Connectez vous ou créez un compte est conditionné par le clic sur cette case à cocher" 
+
+- Badge "En attente de validation"
+Changer "Ce lot divendra accessible dèq qu'il l'aura validée" par "Une fois votre demande validée, vous recevrez une notification et la gestion de votre lot sera entièrement à vous ! 🎉
+
+- Notifications et messages
+A la récéption d'une demande d'adhésion, les membres du syndic (tous les rôles mnt mais avec la possibilité des filtrer sur des rôles spécifiques, donc prévoir un param) une notifcation par rapport à la demande d'adhésion.
+Au clic sur cette notification ça renvoit vers la page de gestion des invitations pour valider ou refuser (réflechir sur le besoin de création d'une page de détail des invitations, si c'est le cas il faut attérir directement sur le détail de cette notification dans ce cas)
+NB : Aujourd'hui le clic sur une notification ne ramène nul part.
+A la validation / refus de cette demande par un membre du syndic :
+- Envoyer une notification au autre membre du bureau de syndic que la demande a été traité par X (traité validé ou rejeté)
+- Envoyer une notification à l'utilisateur ayant demandé l'accès + Message sur "Ma messagerie" + Email + WhatsApp
+NB : Réflechir quand est ce qu'on doit notifier le syndic (à la validation du compte, ou bien à la création de la demande)
+
+- UX 
+Déporter la création d'un invitaiton public au niveau de l'epsace Ma coppropriété - Informations générale
+Après la désactivation du lien public on peut le reacver mais ne jamais créer un nouveau
+L'envoi d'une invitation privé doit se fait unqieuement à partir de la page de détail d'un contact
+La page Invitation à renommer : "Demande d'adhésion" et affiche alors une quement les demandes d'ahésion ordonné par date au lors décroissant (plus récente en premier), et aussi basculer vers un affichage tableau pour pouvoir trier / filter (reprendre la même charte que les autres tableau de l'app)
+
+
+- Email de validation de compte dans le cas  de la création d'un compte
+Q : Pourquoi on un returnTo dashboard ?
+
+Point à réflechir : 
+- Le retrait d'un lot de la liste des lots pour une invitation publique ne se fait que lorsque l'affectation est validée par le syndic. Ce qui fait qu'un même lot peut être associé à deux demandes d'adhésion. 
+A la validation de l'une l'autre passe directement à refuser (Est-ce que ça risque de créer une mal compréhension) ?
