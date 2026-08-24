@@ -21,6 +21,10 @@ A la validation / refus de cette demande par un membre du syndic :
 - Envoyer une notification à l'utilisateur ayant demandé l'accès + Message sur "Ma messagerie" + Email + WhatsApp
 NB : Réflechir quand est ce qu'on doit notifier le syndic (à la validation du compte, ou bien à la création de la demande)
 
+- Envoi d'une invitation privée (pour un lot spécifique à partir de la fiche de contact)
+Il faut garder le même mécanisme que l'invitation publique (sauf que la selection des lots n'est plus demandée).
+Aussi il faut prévoir une case à coché, ce n'est pas mon lot : choisir un autre lot pour réajuster au besoin le numero de lot
+
 - UX 
 Déporter la création d'un invitaiton public au niveau de l'epsace Ma coppropriété - Informations générale
 Après la désactivation du lien public on peut le reacver mais ne jamais créer un nouveau
