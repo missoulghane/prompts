@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%234f46e5'/%3E%3Ctext x='32' y='43' font-family='Helvetica,Arial' font-size='30' font-weight='700' text-anchor='middle' fill='white'%3EDF%3C/text%3E%3C/svg%3E">
+<title>DocFlow — Gestion d'activités manuelles</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- ============ ÉCRAN 1 : CONNEXION ============ -->
+<section id="screen-login" class="screen active">
+  <div class="login-wrap">
+    <div class="login-brand">
+      <div class="logo">DF</div>
+      <h1>DocFlow</h1>
+      <p>Plateforme de traitement documentaire — identification, saisie, validation</p>
+    </div>
+    <form class="login-card" id="login-form" autocomplete="off">
+      <h2>Connexion</h2>
+      <label class="field">
+        <span>Identifiant</span>
+        <select id="login-user"></select>
+      </label>
+      <label class="field">
+        <span>Mot de passe</span>
+        <input type="password" id="login-pwd" value="demo1234" placeholder="••••••••">
+      </label>
+      <div class="login-groupinfo" id="login-groupinfo"></div>
+      <button class="btn btn-primary btn-block" type="submit">Se connecter</button>
+      <p class="hint">Maquette de démonstration — aucune donnée réelle.</p>
+    </form>
+  </div>
+</section>
+
+<!-- ============ ÉCRAN 2 : ACCUEIL / FILE D'ACTIVITÉS ============ -->
+<section id="screen-home" class="screen">
+  <header class="topbar">
+    <div class="topbar-left">
+      <div class="logo sm">DF</div>
+      <strong>DocFlow</strong>
+      <span class="crumb">Mes activités</span>
+    </div>
+    <div class="topbar-right">
+      <button class="icon-btn" id="btn-theme" title="Thème clair / sombre">◐</button>
+      <div class="user-chip" id="user-chip"></div>
+      <button class="btn btn-ghost" id="btn-logout">Déconnexion</button>
+    </div>
+  </header>
+
+  <main class="home">
+    <div class="kpis" id="kpis"></div>
+
+    <div class="panel">
+      <div class="panel-head">
+        <h2>Activités à traiter</h2>
+        <div class="panel-head-actions">
+          <label class="switch">
+            <input type="checkbox" id="f-mygroup" checked>
+            <span>Uniquement mon groupe</span>
+          </label>
+          <button class="btn btn-ghost" id="btn-reset">Réinitialiser</button>
+        </div>
+      </div>
+
+      <div class="filters">
+        <label class="field sm"><span>Recherche</span>
+          <input type="search" id="f-q" placeholder="Flux, client, référence…"></label>
+        <label class="field sm"><span>Client</span><select id="f-client"></select></label>
+        <label class="field sm"><span>Type de flux</span><select id="f-typeflux"></select></label>
+        <label class="field sm"><span>Activité</span><select id="f-activite"></select></label>
+        <label class="field sm"><span>Dépôt du</span><input type="date" id="f-from"></label>
+        <label class="field sm"><span>au</span><input type="date" id="f-to"></label>
+        <label class="field sm"><span>SLA</span><select id="f-sla">
+            <option value="">Tous</option>
+            <option value="late">En retard</option>
+            <option value="risk">À risque (&lt; 2 h)</option>
+            <option value="today">Échéance aujourd'hui</option>
+            <option value="ok">Dans les temps</option>
+          </select></label>
+        <label class="field sm"><span>Priorité</span><select id="f-prio">
+            <option value="">Toutes</option><option>Haute</option><option>Normale</option><option>Basse</option>
+          </select></label>
+      </div>
+
+      <div class="chips" id="chips"></div>
+
+      <table class="table" id="tbl">
+        <thead>
+          <tr>
+            <th data-sort="activite">Activité</th>
+            <th data-sort="client">Client / Flux</th>
+            <th data-sort="type">Type de flux</th>
+            <th data-sort="prio">Priorité</th>
+            <th data-sort="depot">Dépôt le plus ancien</th>
+            <th data-sort="sla">SLA</th>
+            <th data-sort="docs" class="num">Documents</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="tbody"></tbody>
+      </table>
+      <div class="empty" id="empty" hidden>Aucune activité ne correspond aux filtres.</div>
+    </div>
+  </main>
+</section>
+
+<!-- ============ ÉCRAN 3 : POSTE DE TRAVAIL IDENTIFICATION ============ -->
+<section id="screen-work" class="screen">
+  <header class="topbar topbar-work">
+    <div class="topbar-left">
+      <button class="btn btn-ghost" id="btn-back">← File d'activités</button>
+      <span class="crumb" id="work-title"></span>
+    </div>
+    <div class="topbar-center">
+      <div class="progress"><div class="progress-bar" id="progress-bar"></div></div>
+      <span class="progress-label" id="progress-label"></span>
+    </div>
+    <div class="topbar-right">
+      <span class="sla-pill" id="work-sla"></span>
+      <button class="icon-btn" id="btn-help" title="Raccourcis clavier (?)">?</button>
+      <button class="btn btn-ghost" id="btn-finish">Clôturer la session</button>
+    </div>
+  </header>
+
+  <div class="work">
+    <!-- File de documents -->
+    <aside class="queue">
+      <div class="queue-head">
+        <span>File (<b id="queue-count">0</b>)</span>
+        <select id="queue-filter">
+          <option value="all">Tous</option>
+          <option value="todo">À traiter</option>
+          <option value="done">Traités</option>
+        </select>
+      </div>
+      <ul class="queue-list" id="queue-list"></ul>
+    </aside>
+
+    <!-- Visionneuse -->
+    <section class="viewer">
+      <div class="viewer-tools">
+        <div class="grp">
+          <button class="icon-btn" id="v-zoomout" title="Zoom arrière (-)">−</button>
+          <span class="zoom-label" id="v-zoom">100 %</span>
+          <button class="icon-btn" id="v-zoomin" title="Zoom avant (+)">+</button>
+          <button class="icon-btn" id="v-fit" title="Ajuster (0)">⤢</button>
+          <button class="icon-btn" id="v-rot" title="Rotation (R maj)">⟳</button>
+        </div>
+        <div class="grp pages">
+          <button class="icon-btn" id="p-prev" title="Page précédente (↑)">▲</button>
+          <span id="p-label">Page 1 / 1</span>
+          <button class="icon-btn" id="p-next" title="Page suivante (↓)">▼</button>
+        </div>
+        <div class="grp meta" id="v-meta"></div>
+      </div>
+      <div class="canvas" id="canvas">
+        <div class="page-holder" id="page-holder"></div>
+      </div>
+      <nav class="navbar">
+        <button class="btn" id="n-first" title="Premier (Origine)">⏮ Premier</button>
+        <button class="btn" id="n-prev" title="Précédent (←)">◀ Précédent</button>
+        <span class="counter" id="counter">0 / 0</span>
+        <button class="btn" id="n-next" title="Suivant (→)">Suivant ▶</button>
+        <button class="btn" id="n-last" title="Dernier (Fin)">Dernier ⏭</button>
+        <span class="kbd-hint">Navigation clavier : <kbd>←</kbd> <kbd>→</kbd> <kbd>Origine</kbd> <kbd>Fin</kbd> · <kbd>?</kbd> aide</span>
+      </nav>
+    </section>
+
+    <!-- Panneau de classement -->
+    <aside class="side">
+      <div class="side-block">
+        <h3>Document</h3>
+        <dl class="dl" id="doc-meta"></dl>
+      </div>
+
+      <div class="side-block ia" id="ia-block"></div>
+
+      <div class="side-block grow">
+        <h3>Classe cible</h3>
+        <input type="search" id="cls-search" placeholder="Filtrer les classes… (touche F)">
+        <ul class="cls-list" id="cls-list"></ul>
+      </div>
+
+      <div class="side-actions">
+        <button class="btn btn-primary btn-block" id="a-valid">Valider le classement <kbd>Entrée</kbd></button>
+        <div class="row2">
+          <button class="btn btn-warn" id="a-compl">Complément <kbd>C</kbd></button>
+          <button class="btn btn-danger" id="a-reject">Rejeter <kbd>R</kbd></button>
+        </div>
+        <button class="btn btn-ghost btn-block" id="a-undo">↶ Annuler la dernière action <kbd>U</kbd></button>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<!-- ============ MODALES ============ -->
+<div class="modal-backdrop" id="modal-backdrop" hidden>
+  <div class="modal" id="modal"></div>
+</div>
+<div class="toasts" id="toasts"></div>
+
+<script src="app.js"></script>
+</body>
+</html>
